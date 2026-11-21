@@ -29,8 +29,12 @@
 
 ## Fase 1 — Visual (mockup encenado, sem Claude real)
 
-- [ ] **1.1 Linguagem visual.** Cores, tema claro e escuro, ícones dos atores, estilo dos blocos em **duas ou três variações** com uma chave para alternar. (§5)
+- [x] **1.1 Linguagem visual.** Cores, tema claro e escuro, ícones dos atores, estilo dos blocos em **duas ou três variações** com uma chave para alternar. (§5) *(21/11/2026)*
   *Pronto quando:* o usuário escolhe uma variação.
+  *Escolha:* **Nítido de longe; o bloco ativo se abre em Cena no zoom.** Foram três variações (Nítido, Circuito, Cena); o Circuito saiu. A Cena (ator e alvo como personagens, pacote viajando entre eles) fica guardada para a 1.5; até lá, `?bloco=cena` na URL a mostra no canvas inteiro.
+  *Onde:* `mockup/src/visual/`: tokens de cor em `tema.css`, blocos em `blocos.tsx` e `variacoes.css`, ícones dos 8 atores em SVG próprio (`icone-do-ator.tsx`), montagem do canvas em `montar-canvas.ts`. Embaixo do fluxo, um catálogo com um bloco em cada estado e os atores (`?ver=tudo` enquadra tudo).
+  *Decisões:* a cor diz de quem é a vez: em andamento = violeta (Claude), sua vez = rosa (você). Verde declarado = mesmo verde, mais fraco e tracejado. Previsto apagado e tracejado; bloqueado com listras. Laços em colchete por cima dos blocos. Layout em zigue-zague de 4 por linha é provisório (o automático é a 1.3).
+  *Regras técnicas que valem daqui para a frente:* animação contínua só com `transform` e `opacity` (sombra, borda e `left` animados travaram o VS Code); `onlyRenderVisibleElements` ligado. Tema forçado por `data-tema` no `<html>` com regra CSS, nunca `style.colorScheme`: no build, o `light-dark()` vira variáveis do Lightning CSS que só regra CSS acerta.
 - [ ] **1.2 Estados dos blocos.** Cinza, animando, verde comprovado, verde declarado, amarelo, laranja, vermelho, "não classificado". (§5)
 - [ ] **1.3 Canvas completo.** Minimapa, layout automático (dagre) na primeira abertura, posição salva ao arrastar. (§5 "Base técnica")
 - [ ] **1.4 Execução encenada.** Tocar, pausar, velocidade; blocos acendem em sequência; o fluxo corre pelas conexões. (§5 "O mockup")

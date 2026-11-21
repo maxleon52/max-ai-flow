@@ -441,7 +441,7 @@ Mostra bem o zoom (seção 5): de longe são quatro blocos; de perto, cada um te
 - [ ] Usar o Agent Flow como base da captura ou só como referência?
 - [ ] A lista de tarefas nativa está ativa nesta versão e com que granularidade aparece nos hooks?
 - [ ] Dá para desligar localmente uma skill ou regra que veio do repositório sem apagar o arquivo?
-- [ ] Estilo dos blocos: escolher entre as variações do mockup.
+- [x] Estilo dos blocos: escolher entre as variações do mockup. *Decidido em 21/11/2026: Nítido (cartão limpo) de longe; o bloco ativo se abre em Cena (mini-cena com atores) no zoom. Detalhes na 1.1 do roadmap.*
 - [ ] Nome definitivo. "Max AI Flow" é o nome de trabalho; atenção: no `projeto-ticket`, "Max" está reservado para o assistente de IA do produto Maxwell.
 
 ## 12. Fontes

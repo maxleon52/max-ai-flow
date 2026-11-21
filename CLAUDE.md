@@ -31,7 +31,7 @@ Ao concluir uma tarefa: marcar `[x]` com a data no roadmap e dizer qual é a pr�
 - **Medir em vez de deduzir:** se dá para verificar (rodar, ler a doc pelo Context7), verificar.
 - Datas no código: **date-fns**.
 - **Git:** remoto em `github.com/maxleon52/max-ai-flow`. Só `main` + uma branch por tarefa do roadmap (`tarefa/<número>-<nome-curto>`). Nunca comitar direto na `main`.
-  - Ao fechar a tarefa: commit, push da branch e PR simples aberto **pela API do GitHub**, com a credencial que o `git` já usa (`git credential fill`, sem `gh`; mesmo fluxo da skill `comita-e-envia` do `projeto-ticket`). Token só em variável, nunca impresso.
+  - Ao fechar a tarefa: commit, push da branch e PR aberto **pela API do GitHub** (descrição sem firula, mas completa: o contexto e o porquê da tarefa, o que mudou com as decisões tomadas, como conferir, o que ele precisa olhar ou decidir, e o que ficou para depois), com a credencial que o `git` já usa (`git credential fill`, sem `gh`; mesmo fluxo da skill `comita-e-envia` do `projeto-ticket`). Token só em variável, nunca impresso.
   - **Quem mescla é ele.** Depois que ele avisar: `git switch main && git pull`.
   - Nunca mencionar IA em commit, PR ou MR.
 - Nada de segredo (token, senha, `.env`) em arquivo comitado.
@@ -39,4 +39,4 @@ Ao concluir uma tarefa: marcar `[x]` com a data no roadmap e dizer qual é a pr�
 ## Estado do repositório
 
 - `docs/`: concepção e roadmap.
-- `mockup/`: Vite + React + TypeScript + React Flow + Motion (`npm run dev`, `npm run build`, `npm run lint`, `npm run validar`). Canvas ainda vazio; modelo de dados em `src/modelo/`; fluxos (resolver ticket, criar feature e o exemplo deste repositório) em `src/fluxos/`.
+- `mockup/`: Vite + React + TypeScript + React Flow + Motion (`npm run dev`, `npm run build`, `npm run lint`, `npm run validar`). Canvas com "Criar feature" no estilo escolhido na 1.1 e catálogo de estados e atores; visual em `src/visual/`; modelo de dados em `src/modelo/`; fluxos (resolver ticket, criar feature e o exemplo deste repositório) em `src/fluxos/`.

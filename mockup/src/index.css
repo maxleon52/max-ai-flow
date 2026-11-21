@@ -9,6 +9,18 @@
   --dots: light-dark(#d4d4dc, #2a2c35);
 }
 
+/*
+ * Tema forçado pela chave. Tem de ser regra CSS, não `style.colorScheme` por JavaScript: no build,
+ * o `light-dark()` vira variáveis `--lightningcss-*` que só as regras com `color-scheme` acertam.
+ */
+:root[data-tema='light'] {
+  color-scheme: light;
+}
+
+:root[data-tema='dark'] {
+  color-scheme: dark;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -24,4 +36,85 @@ body,
 body {
   background: var(--bg);
   color: var(--text);
+}
+
+/* Chave de tema (1.1) */
+.chave {
+  display: flex;
+  gap: 8px;
+  padding: 5px;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  box-shadow: var(--sombra-alta);
+}
+
+.chave-grupo {
+  display: flex;
+  gap: 2px;
+}
+
+.chave button {
+  position: relative;
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chave .pequeno button {
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.chave button.ativo {
+  color: var(--text);
+}
+
+.chave button:focus-visible {
+  outline: 2px solid var(--cor-claude);
+  outline-offset: 1px;
+}
+
+.chave-marcador {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: var(--superficie-2);
+  box-shadow: inset 0 0 0 1px var(--borda);
+}
+
+.chave-rotulo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.titulo-do-fluxo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.titulo-do-fluxo strong {
+  font-size: 15px;
+}
+
+.titulo-do-fluxo span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Aba estreita do VS Code: a chave tem prioridade sobre o título. */
+@media (max-width: 560px) {
+  .titulo-do-fluxo {
+    display: none;
+  }
 }
