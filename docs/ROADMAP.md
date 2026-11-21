@@ -12,8 +12,12 @@
 - [x] **0.2 Esqueleto do mockup.** Vite + React + TypeScript + React Flow + Motion em `mockup/`. *(20/11/2026)*
   *Pronto quando:* `npm run dev` abre um canvas vazio com zoom e arrasto.
   *Versões:* Vite 8, React 19, TypeScript 7, `@xyflow/react` 13, `motion` 14, lint com Oxlint. No React Flow 13 o tema claro/escuro segue o sistema sozinho (`light-dark()`); para forçar, `forceColorMode`.
-- [ ] **0.3 Modelo de dados do fluxo.** Processo → etapa → sub-passo, com estado, tipo, ator, arquivos, links e mapa de linhas (trecho da skill que gerou cada bloco). Tudo depende dele, por isso vem antes do visual. (§5, §7, §9.5)
+- [x] **0.3 Modelo de dados do fluxo.** Processo → etapa → sub-passo, com estado, tipo, ator, arquivos, links e mapa de linhas (trecho da skill que gerou cada bloco). Tudo depende dele, por isso vem antes do visual. (§5, §7, §9.5) *(20/11/2026)*
   *Pronto quando:* tipos escritos e um fluxo de exemplo validando contra eles.
+  *Onde:* `mockup/src/modelo/` (tipos, validador, estado visual) e `mockup/src/fluxos/` (exemplo: "Fazer uma tarefa do roadmap", lido do `CLAUDE.md` deste repositório, com duas execuções que cobrem todos os estados). `npm run validar` confere as regras e o mapa de linhas contra os arquivos de verdade.
+  *Decisões:* **mapa** (`Processo`, igual em toda sessão) separado da **execução** (`Execucao`, uma por `session_id`); etapa sem registro = prevista. Ids únicos no processo inteiro. Conexões só entre irmãs; ramificação e laço são conexões com `condicao`; nível sem conexões = itens soltos. `alvo` da etapa diz para onde o movimento vai (o tipo de mini-cena da 1.6 sai do par ator → alvo). Ator `plataforma-git` com nome por projeto (GitLab, GitHub).
+  *Acréscimos à concepção, a confirmar na 1.2:* estado **"aguardando você"** (portão humano parado; não é "animando", porque o Claude não está trabalhando) e evidência **"confirmação"** (a mensagem do usuário é o que torna verde comprovado um portão humano).
+  *Fica para depois:* nível roadmap → tarefa (1.8), origem visível (5.1), garantia bloqueia/cobra (4.4).
 - [ ] **0.4 Dados falsos de dois fluxos.** "Resolver ticket" (`ecnh-app`) e "Criar feature" (`frontend-cd-refactory`), transcritos à mão no modelo da 0.3. Dois projetos diferentes já na largada. (§10)
 
 ## Fase 1 — Visual (mockup encenado, sem Claude real)
