@@ -8,7 +8,7 @@
 
 ## Fase 0 — Preparação
 
-- [ ] **0.1 Referências visuais.** O usuário manda vídeos, sites ou apps de que gosta (opcional, mas acelera a 1.1).
+- [x] ~~**0.1 Referências visuais.** O usuário manda vídeos, sites ou apps de que gosta (opcional, mas acelera a 1.1).~~ *Pulada em 20/11/2026: sem referências no momento. O visual será escolhido olhando as variações da 1.1; se aparecer algo no caminho, um print ou GIF com uma frase do que agradou ("gosto de como o cartão voa no 0:42").*
 - [x] **0.2 Esqueleto do mockup.** Vite + React + TypeScript + React Flow + Motion em `mockup/`. *(20/11/2026)*
   *Pronto quando:* `npm run dev` abre um canvas vazio com zoom e arrasto.
   *Versões:* Vite 8, React 19, TypeScript 7, `@xyflow/react` 13, `motion` 14, lint com Oxlint. No React Flow 13 o tema claro/escuro segue o sistema sozinho (`light-dark()`); para forçar, `forceColorMode`.
