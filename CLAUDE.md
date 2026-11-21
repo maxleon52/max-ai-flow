@@ -39,4 +39,4 @@ Ao concluir uma tarefa: marcar `[x]` com a data no roadmap e dizer qual é a pr�
 ## Estado do repositório
 
 - `docs/`: concepção e roadmap.
-- `mockup/`: será criado na tarefa 0.2 (Vite + React + TypeScript + React Flow + Motion).
+- `mockup/`: Vite + React + TypeScript + React Flow + Motion (`npm run dev`, `npm run build`, `npm run lint`). Por enquanto, canvas vazio.

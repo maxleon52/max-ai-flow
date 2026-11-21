@@ -9,8 +9,9 @@
 ## Fase 0 — Preparação
 
 - [ ] **0.1 Referências visuais.** O usuário manda vídeos, sites ou apps de que gosta (opcional, mas acelera a 1.1).
-- [ ] **0.2 Esqueleto do mockup.** Vite + React + TypeScript + React Flow + Motion em `mockup/`.
+- [x] **0.2 Esqueleto do mockup.** Vite + React + TypeScript + React Flow + Motion em `mockup/`. *(20/11/2026)*
   *Pronto quando:* `npm run dev` abre um canvas vazio com zoom e arrasto.
+  *Versões:* Vite 8, React 19, TypeScript 7, `@xyflow/react` 13, `motion` 14, lint com Oxlint. No React Flow 13 o tema claro/escuro segue o sistema sozinho (`light-dark()`); para forçar, `forceColorMode`.
 - [ ] **0.3 Modelo de dados do fluxo.** Processo → etapa → sub-passo, com estado, tipo, ator, arquivos, links e mapa de linhas (trecho da skill que gerou cada bloco). Tudo depende dele, por isso vem antes do visual. (§5, §7, §9.5)
   *Pronto quando:* tipos escritos e um fluxo de exemplo validando contra eles.
 - [ ] **0.4 Dados falsos de dois fluxos.** "Resolver ticket" (`ecnh-app`) e "Criar feature" (`frontend-cd-refactory`), transcritos à mão no modelo da 0.3. Dois projetos diferentes já na largada. (§10)
