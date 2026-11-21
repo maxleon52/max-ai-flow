@@ -1,0 +1,558 @@
+/*
+ * Estilo dos blocos nas três variações da 1.1. `--cor` vem do estado (tema.css).
+ *
+ * Desempenho: as animações contínuas mexem só em `transform` e `opacity`, que a placa de vídeo
+ * anima sem redesenhar a tela. Nada de animar sombra, borda, `left` ou propriedade registrada.
+ */
+
+/* Anel que se expande e some: o "pulso" da sua vez, num elemento próprio. */
+@keyframes anel {
+  from {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(var(--anel-escala, 1.5));
+    opacity: 0;
+  }
+}
+
+@keyframes piscar {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes respirar {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* O trilho do pacote tem a largura do trajeto; 100% de translação leva o pacote ao fim. */
+@keyframes viajar {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Quem prefere menos movimento no sistema não vê animação contínua. */
+@media (prefers-reduced-motion: reduce) {
+  .react-flow *,
+  .react-flow *::before,
+  .react-flow *::after {
+    animation: none !important;
+  }
+}
+
+@keyframes quicar {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* ─── Comum ─────────────────────────────────────────────────────────────── */
+
+.react-flow__handle {
+  opacity: 0;
+  pointer-events: none;
+  border: none;
+  min-width: 0;
+  min-height: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.bloco {
+  position: relative;
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px 2px 6px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--cor);
+  background: color-mix(in oklab, var(--cor) 13%, transparent);
+}
+
+.detalhe {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+.bolinhas {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.bolinha {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cor);
+}
+
+.bolinha[data-estado='cinza'],
+.bolinha[data-estado='verde-declarado'] {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--cor);
+}
+
+.bolinha[data-estado='animando'] {
+  animation: piscar 1.2s ease-in-out infinite;
+}
+
+.bolinhas-conta {
+  margin-left: 4px;
+  color: var(--muted);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Conexões */
+.react-flow__edge-path {
+  stroke: var(--borda-forte);
+  stroke-width: 1.6;
+}
+
+.react-flow__edge.percorrida .react-flow__edge-path {
+  stroke: var(--conexao-percorrida);
+}
+
+.react-flow__edge.ativa .react-flow__edge-path {
+  stroke: var(--cor-claude);
+  stroke-width: 2.2;
+}
+
+.react-flow__edge-textbg {
+  fill: var(--bg);
+}
+
+.react-flow__edge-text {
+  fill: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* Catálogo */
+.titulo-secao {
+  width: 640px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.titulo-secao small {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+
+.ator-cartao {
+  width: 124px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 10px 14px;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  box-shadow: var(--sombra);
+}
+
+.ator-cartao span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.ator-cartao.ator-cena {
+  border-radius: 24px;
+  background: radial-gradient(100% 70% at 50% 0%, color-mix(in oklab, currentColor 12%, transparent), transparent),
+    var(--superficie);
+}
+
+/* ─── Nítido: o bloco de longe (escolhido na 1.1) ────────────────────────────────────────────────── */
+
+.nitido {
+  min-height: 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 12px 14px 11px 17px;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  box-shadow: var(--sombra-alta);
+}
+
+/* Trilho do estado, à esquerda */
+.nitido::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--cor);
+}
+
+.nitido[data-estado='verde-declarado']::after {
+  background: repeating-linear-gradient(to bottom, var(--cor) 0 4px, transparent 4px 7px);
+}
+
+.nitido[data-estado='cinza'] {
+  border-style: dashed;
+  box-shadow: none;
+  background: color-mix(in oklab, var(--superficie) 60%, transparent);
+}
+
+.nitido[data-estado='cinza'] .nitido-nome {
+  color: var(--muted);
+}
+
+.nitido[data-estado='bloqueado'] {
+  background: repeating-linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--cor) 7%, transparent) 0 7px,
+      transparent 7px 14px
+    ),
+    var(--superficie);
+}
+
+.nitido[data-estado='vermelho'],
+.nitido[data-estado='laranja'],
+.nitido[data-estado='aguardando-voce'] {
+  border-color: color-mix(in oklab, var(--cor) 55%, var(--borda));
+}
+
+/* Sua vez: anel que se expande a partir da borda */
+.nitido[data-estado='aguardando-voce']::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 2px solid var(--cor);
+  border-radius: 15px;
+  --anel-escala: 1.06;
+  animation: anel 1.8s ease-out infinite;
+  pointer-events: none;
+}
+
+.nitido[data-estado='animando'] {
+  border-color: var(--cor);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--cor) 10%, transparent), var(--sombra-alta);
+}
+
+/* Em andamento: halo que respira em volta do bloco (só opacidade) */
+.nitido[data-estado='animando']::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 18px;
+  border: 2px solid color-mix(in oklab, var(--cor) 45%, transparent);
+  animation: respirar 1.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.nitido-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.nitido-atores {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nitido-ator,
+.nitido-alvo {
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in oklab, currentColor 11%, transparent);
+}
+
+.nitido-ator {
+  width: 30px;
+  height: 30px;
+}
+
+.nitido-alvo {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+}
+
+.nitido-seta {
+  color: var(--muted);
+}
+
+.nitido-nome {
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.nitido-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+}
+
+/* ─── Cena: o bloco aberto pelo zoom (guardado para a 1.5) ──────────────────────────────────────────────────── */
+
+.cena {
+  min-height: 196px;
+  overflow: hidden;
+  background: var(--superficie);
+  border: 1.5px solid color-mix(in oklab, var(--cor) 38%, var(--borda));
+  border-radius: 20px;
+  box-shadow: 0 4px 0 color-mix(in oklab, var(--cor) 26%, var(--borda)), var(--sombra-alta);
+}
+
+.cena[data-estado='cinza'],
+.cena[data-estado='verde-declarado'] {
+  border-style: dashed;
+}
+
+.cena[data-estado='cinza'] {
+  box-shadow: none;
+}
+
+.cena-palco {
+  position: relative;
+  height: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: radial-gradient(120% 100% at 50% 0%, color-mix(in oklab, var(--cor) 17%, transparent), transparent 72%),
+    var(--superficie-2);
+  border-bottom: 1px solid var(--borda);
+}
+
+.cena-palco:has(.cena-sozinho) {
+  justify-content: center;
+  gap: 14px;
+}
+
+.cena[data-estado='animando'] .cena-palco::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 90% at 50% 0%, color-mix(in oklab, var(--cor) 22%, transparent), transparent);
+  animation: respirar 2.2s ease-in-out infinite;
+}
+
+.cena[data-estado='bloqueado'] .cena-palco {
+  background: repeating-linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--cor) 9%, transparent) 0 8px,
+      transparent 8px 16px
+    ),
+    var(--superficie-2);
+}
+
+.cena[data-estado='cinza'] .personagem {
+  opacity: 0.5;
+}
+
+.personagem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.personagem-corpo {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--superficie);
+  border: 1.5px solid color-mix(in oklab, currentColor 30%, transparent);
+  box-shadow: 0 3px 10px -4px color-mix(in oklab, currentColor 40%, transparent);
+}
+
+.personagem-nome {
+  max-width: 76px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.personagem-corpo {
+  position: relative;
+}
+
+.personagem.chamando .personagem-corpo {
+  animation: quicar 1.6s ease-in-out infinite;
+}
+
+.personagem.chamando .personagem-corpo::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid var(--cor-voce);
+  --anel-escala: 1.45;
+  animation: anel 1.6s ease-out infinite;
+}
+
+.trajeto {
+  position: relative;
+  flex: 1;
+  height: 26px;
+  margin: 0 8px 18px;
+}
+
+.trajeto-linha {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.trajeto-linha path {
+  stroke: var(--cor);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.trajeto[data-estado='cinza'] .trajeto-linha path,
+.trajeto[data-estado='verde-declarado'] .trajeto-linha path {
+  stroke-dasharray: 3 5;
+}
+
+.trajeto[data-estado='animando'] .trajeto-linha path,
+.trajeto[data-estado='aguardando-voce'] .trajeto-linha path {
+  stroke-dasharray: 2 6;
+  opacity: 0.6;
+}
+
+.pacote-trilho {
+  position: absolute;
+  left: 0;
+  right: 14px;
+  top: calc(50% - 5px);
+  height: 10px;
+  animation: viajar 1.8s ease-in-out infinite;
+}
+
+.pacote-trilho.atrasado {
+  animation-delay: 0.9s;
+}
+
+.pacote {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 14px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--cor);
+  box-shadow: 0 0 12px var(--cor);
+}
+
+.trajeto-marca,
+.cena-sozinho {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: var(--cor);
+  background: var(--superficie);
+  border: 1.5px solid var(--cor);
+}
+
+.trajeto-marca {
+  position: absolute;
+  left: calc(50% - 12px);
+  top: calc(50% - 12px);
+}
+
+.cena-sozinho {
+  margin-bottom: 18px;
+}
+
+.cena-texto {
+  padding: 12px 16px 14px;
+}
+
+.cena-nome {
+  font-size: 14.5px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.cena[data-estado='cinza'] .cena-nome {
+  color: var(--muted);
+}
+
+.cena-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 9px;
+}
+
+.cena .detalhe {
+  display: block;
+  margin-top: 7px;
+}
+
+.variacao-cena .react-flow__edge-path {
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+.variacao-cena .react-flow__edge:not(.percorrida):not(.ativa) .react-flow__edge-path {
+  stroke-dasharray: 1 7;
+}

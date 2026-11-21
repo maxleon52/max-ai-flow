@@ -1,0 +1,43 @@
+/*
+ * Tokens de cor (tarefa 1.1). `light-dark()` segue o `color-scheme` da página, que a chave de tema
+ * troca entre sistema, claro e escuro.
+ *
+ * Estados: a cor diz de quem é a vez. "Em andamento" é a cor do Claude (violeta); "sua vez" é a
+ * sua (rosa). Verde comprovado é cheio; verde declarado é o mesmo verde, mais fraco e tracejado.
+ */
+:root {
+  --superficie: light-dark(#ffffff, #1b1d24);
+  --superficie-2: light-dark(#f3f3f7, #23262f);
+  --borda: light-dark(#e3e3ea, #2f323d);
+  --borda-forte: light-dark(#cfd0da, #41455288);
+  --sombra: light-dark(0 1px 2px #1b1b2108, 0 1px 2px #0006);
+  --sombra-alta: light-dark(0 8px 24px -8px #1b1b2126, 0 10px 30px -10px #000a);
+
+  --conexao-percorrida: color-mix(in oklab, var(--estado-verde-comprovado) 70%, transparent);
+
+  --cor-claude: light-dark(#7c5cff, #9d88ff);
+  --cor-voce: light-dark(#e0468a, #f472b0);
+
+  --estado-cinza: light-dark(#a3a7b3, #5f6472);
+  --estado-animando: var(--cor-claude);
+  --estado-aguardando-voce: var(--cor-voce);
+  --estado-verde-comprovado: light-dark(#12a150, #35c97c);
+  --estado-verde-declarado: light-dark(#5cb98a, #3c936a);
+  --estado-amarelo: light-dark(#d4a00b, #efc23a);
+  --estado-bloqueado: light-dark(#64748b, #8d9ab0);
+  --estado-laranja: light-dark(#ec7a1c, #ff9b4a);
+  --estado-vermelho: light-dark(#e0393e, #ff6166);
+  --estado-nao-classificado: light-dark(#8f7fc4, #a898dc);
+}
+
+/* Cada bloco recebe `data-estado`; daqui em diante, `--cor` é a cor do estado dele. */
+[data-estado='cinza'] { --cor: var(--estado-cinza); }
+[data-estado='animando'] { --cor: var(--estado-animando); }
+[data-estado='aguardando-voce'] { --cor: var(--estado-aguardando-voce); }
+[data-estado='verde-comprovado'] { --cor: var(--estado-verde-comprovado); }
+[data-estado='verde-declarado'] { --cor: var(--estado-verde-declarado); }
+[data-estado='amarelo'] { --cor: var(--estado-amarelo); }
+[data-estado='bloqueado'] { --cor: var(--estado-bloqueado); }
+[data-estado='laranja'] { --cor: var(--estado-laranja); }
+[data-estado='vermelho'] { --cor: var(--estado-vermelho); }
+[data-estado='nao-classificado'] { --cor: var(--estado-nao-classificado); }
