@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
+    "validar": "node scripts/validar-fluxos.ts",
     "preview": "vite preview"
   },
   "dependencies": {
     "@xyflow/react": "^13.0.2",
+    "date-fns": "^4.4.0",
     "motion": "^14.14.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
