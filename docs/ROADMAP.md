@@ -18,7 +18,14 @@
   *Decisões:* **mapa** (`Processo`, igual em toda sessão) separado da **execução** (`Execucao`, uma por `session_id`); etapa sem registro = prevista. Ids únicos no processo inteiro. Conexões só entre irmãs; ramificação e laço são conexões com `condicao`; nível sem conexões = itens soltos. `alvo` da etapa diz para onde o movimento vai (o tipo de mini-cena da 1.6 sai do par ator → alvo). Ator `plataforma-git` com nome por projeto (GitLab, GitHub).
   *Acréscimos à concepção, a confirmar na 1.2:* estado **"aguardando você"** (portão humano parado; não é "animando", porque o Claude não está trabalhando) e evidência **"confirmação"** (a mensagem do usuário é o que torna verde comprovado um portão humano).
   *Fica para depois:* nível roadmap → tarefa (1.8), origem visível (5.1), garantia bloqueia/cobra (4.4).
-- [ ] **0.4 Dados falsos de dois fluxos.** "Resolver ticket" (`ecnh-app`) e "Criar feature" (`frontend-cd-refactory`), transcritos à mão no modelo da 0.3. Dois projetos diferentes já na largada. (§10)
+- [x] **0.4 Dados falsos de dois fluxos.** "Resolver ticket" (`ecnh-app`) e "Criar feature" (`frontend-cd-refactory`), transcritos à mão no modelo da 0.3. Dois projetos diferentes já na largada. (§10) *(20/11/2026)*
+  *Onde:* `mockup/src/fluxos/resolver-ticket.ts` (skill `resolve-ticket` + fechamento comum de `atualizar-controles.md`, três níveis) e `criar-feature.ts` (`/criar-feature` + `planning.md` + `migration-checklist.md`). Uma execução falsa em cada: ticket 42 parado em você colando a resposta; feature "Budget" com integração bloqueada e testes em andamento. Mapa de linhas conferido por `npm run validar` contra os arquivos dos dois projetos (só leitura).
+  *O que a transcrição ensinou:*
+  - Estado novo **"bloqueada"** (`dependeDe`), vindo do `bloqueado` do `checklist.json` do cd-refactory: não é pulada (vai ser feita) nem aguardando você (depende de fora). A confirmar na 1.2, junto com "aguardando você".
+  - Etapa mãe só é verde **comprovado** se todo sub-passo feito também for; um declarado já a torna declarada.
+  - **Ramo não seguido** fica cinza para sempre (ex.: "legado inacessível"). Sub-passo opcional previsto não conta como pendência. Mas a obrigatoriedade depende do caminho: com "relato não claro", "Procurar o que já existe" (obrigatória) é pulada de propósito. O motor (2.4) precisa saber que caminho foi seguido, e o visual (1.2/1.4) precisa mostrar o ramo não seguido apagado, não como falta.
+  - O **fechamento comum** do `ecnh-app` entrou copiado dentro de "Registrar o ticket". Ao transcrever "Resolver issue" (2.9) ele se repete: o modelo vai precisar de "etapa que chama outro processo".
+  - A CONCEPCAO §10 resume "Criar feature" com a responsividade no fim; o comando a pede logo depois da UI. Vale o texto do comando.
 
 ## Fase 1 — Visual (mockup encenado, sem Claude real)
 

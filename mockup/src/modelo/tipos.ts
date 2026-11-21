@@ -133,6 +133,12 @@ export type Situacao =
   /** `comprovada` = veio de evidência que atende ao critério; `declarada` = só o modelo disse. */
   | { estado: 'feita'; em: Instante; prova: 'comprovada' | 'declarada' }
   | { estado: 'pulada'; em: Instante; justificativa: string }
+  /**
+   * Não dá para fazer agora: depende de algo de fora (ex.: "endpoint do back-end"). Diferente de
+   * pulada (não vai ser feita) e de aguardando-voce (a vez é do usuário). Vem do `bloqueado` com
+   * `dependeDe` do checklist.json do frontend-cd-refactory.
+   */
+  | { estado: 'bloqueada'; em: Instante; dependeDe: string }
   /** Algo depois dela mudou o que ela tinha produzido (CONCEPCAO §9.5, "Impacto"). */
   | { estado: 'desatualizada'; em: Instante; causa: Id; motivo: string }
   | { estado: 'falhou'; em: Instante; motivo: string }

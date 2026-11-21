@@ -109,14 +109,22 @@ export function validarExecucao(execucao: Execucao, processo: Processo): Problem
       erro(onde, 'não há etapa com esse id no mapa nem nos extras')
       continue
     }
-    validarRegistro(registro, onde, etapas, instante, erro)
+    const idsDasFilhas = filhas.get(id) ?? []
+    validarRegistro(registro, onde, etapas, idsDasFilhas.length > 0, instante, erro)
 
-    // O estado se propaga para cima: mãe feita não pode ter filha pendente ou com falha.
-    if (registro.situacao.estado === 'feita') {
-      for (const filha of filhas.get(id) ?? []) {
-        const estado = execucao.registros[filha]?.situacao.estado ?? 'prevista'
-        if (!['feita', 'pulada'].includes(estado)) {
-          erro(onde, `está feita, mas o sub-passo "${filha}" está "${estado}"`)
+    // O estado se propaga para cima: mãe feita não pode ter filha pendente ou com falha, e só é
+    // comprovada se toda filha feita também for. Filha opcional ainda prevista é caminho não
+    // seguido (ex.: o ramo "legado inacessível"), e não pendência.
+    const situacao = registro.situacao
+    if (situacao.estado === 'feita') {
+      for (const filha of idsDasFilhas) {
+        const daFilha = execucao.registros[filha]?.situacao ?? { estado: 'prevista' }
+        const caminhoNaoSeguido = daFilha.estado === 'prevista' && !etapas.get(filha)?.obrigatoria
+        if (daFilha.estado !== 'feita' && daFilha.estado !== 'pulada' && !caminhoNaoSeguido) {
+          erro(onde, `está feita, mas o sub-passo "${filha}" está "${daFilha.estado}"`)
+        }
+        if (situacao.prova === 'comprovada' && daFilha.estado === 'feita' && daFilha.prova === 'declarada') {
+          erro(onde, `está comprovada, mas o sub-passo "${filha}" é só declarado`)
         }
       }
     }
@@ -129,6 +137,7 @@ function validarRegistro(
   registro: Registro,
   onde: string,
   etapas: Map<Id, Etapa>,
+  temSubpassos: boolean,
   instante: (onde: string, valor: Instante) => void,
   erro: (onde: string, msg: string) => void,
 ) {
@@ -143,7 +152,11 @@ function validarRegistro(
   if (situacao.estado === 'pulada' && !situacao.justificativa.trim()) {
     erro(onde, 'pulada sem justificativa (sem ela, é vermelho, não amarelo)')
   }
-  if (situacao.estado === 'feita' && situacao.prova === 'comprovada' && !evidencias.some(comprova)) {
+  if (situacao.estado === 'bloqueada' && !situacao.dependeDe.trim()) {
+    erro(onde, 'bloqueada sem dizer do que depende')
+  }
+  // Etapa com sub-passos tira a prova deles (ver validarExecucao); a folha precisa da própria.
+  if (situacao.estado === 'feita' && situacao.prova === 'comprovada' && !temSubpassos && !evidencias.some(comprova)) {
     erro(
       onde,
       'verde comprovado sem evidência que comprove (arquivo, comando com critério atendido ou confirmação do usuário)',
